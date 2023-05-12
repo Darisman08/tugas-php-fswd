@@ -1,4 +1,6 @@
 <?php
+session_start();
+if(isset($_SESSION['is_login']) && ($_SESSION['is_login']) == true):
 // Koneksi ke database
 require 'koneksi.php';
 // Ambil data dari form
@@ -25,12 +27,17 @@ if(isset($_POST['adduser']))
             $query = "INSERT INTO users (email,name,role,avatar,phone,address,password) 
             VALUES ('$email','$name','$role','$nama','$phone','$alamat','$password')";
             if (mysqli_query($conn, $query)) {
+                $_SESSION['message'] = "Data berhasil ditambahkan!";
                 header("Location: user.php");
                 exit(0);
             } else {
-                echo 'Error: ' . mysqli_error($conn);
+                $_SESSION['message'] = "Data gagal disimpan!";
+                header("Location: user.php");
             }
         }
+    }else {
+        $_SESSION['message'] = "Data gagal disimpan!";
+        header("Location: user.php");
     }
 }
 
@@ -45,10 +52,11 @@ $phone = $_POST['phone'];
 $alamat = $_POST['alamat'];
 $avatar = $_POST['avatar'];
 
-// Query untuk menambah data
+// Query untuk mengubah data
 $query = "UPDATE users SET email='$email',name='$name',role='$role',avatar='$avatar',phone='$phone',address='$address',password='$password' WHERE id='$id'";
 //Eksekusi query
 if (mysqli_query($conn, $query)) {
+    $_SESSION['message'] = "Data berhasil diubah!";
     header("Location: user.php");
     exit(0);
 } else {
@@ -60,16 +68,19 @@ if(isset($_POST['deluser']))
 {
 $id = $_POST['deluser'];
 
-// Query untuk menambah data
+// Query untuk menghapus data
 $query = "DELETE FROM users WHERE id='$id'";
 //Eksekusi query
 if (mysqli_query($conn, $query)) {
+    $_SESSION['message'] = "Data berhasil dihapus!";
     header("Location: user.php");
     exit(0);
 } else {
     echo 'Error: ' . mysqli_error($conn);
 }
 }
-// //Tutup koneksi
-// mysqli_close($conn);
+?>
+<?php else :
+    header('Location: login.php');
+endif;
 ?>

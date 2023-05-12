@@ -1,3 +1,7 @@
+<?php
+  session_start();
+  if(isset($_SESSION['is_login']) && ($_SESSION['is_login']) == true):
+?>
 <!doctype html>
 <html lang="en">
 
@@ -16,12 +20,14 @@
     $result = mysqli_query($conn, $query);
   ?>
   <div class="container mt-4">
+  <?php include('message.php'); ?>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <h4>Data Pengguna
-              <a href="adduser.php" class="btn btn-primary float-end">Tambah User</a>
+              <a href="logout.php" class="btn btn-danger btn-sm float-end m-1">Keluar</a>
+              <a href="adduser.php" class="btn btn-primary btn-sm float-end m-1">Tambah User</a>
             </h4>
           </div>
           <div class="card-body">
@@ -46,7 +52,7 @@
                     <?= $row['id'] ?>
                   </td>
                   <td>
-                    <a href="userdeatil.php?id=<?= $row['id']; ?>" class="btn btn-info btn-sm">Detail</a>
+                    <a href="detailuser.php?id=<?= $row['id']; ?>" class="btn btn-info btn-sm">Detail</a>
                     <a href="edituser.php?id=<?= $row['id']; ?>" class="btn btn-success btn-sm">Edit</a>
                     <form action="action-user.php" method="post" class="d-inline">
                       <button type="submit" id="deluser" name="deluser" value="<?=$row['id'];?>"
@@ -88,5 +94,7 @@
     integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
     crossorigin="anonymous"></script>
 </body>
-
 </html>
+<?php else :
+    header('Location: login.php');
+endif;?>

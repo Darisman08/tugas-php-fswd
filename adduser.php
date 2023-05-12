@@ -1,3 +1,7 @@
+<?php
+  session_start();
+  if(isset($_SESSION['is_login']) && ($_SESSION['is_login']) == true):
+?>
 <!doctype html>
 <html lang="en">
 
@@ -23,31 +27,36 @@
             <form action="action-user.php" method="post" enctype="multipart/form-data" class="row g-3">
               <div class="col-12">
                 <label>Nama</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lengkap">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lengkap" required>
               </div>
               <div class="col-md-6">
                 <label>Role</label>
-                  <select id="role" name="role" class="form-select" aria-label="Pilih Role Pengguna">
+                  <select id="role" name="role" class="form-select" aria-label="Pilih Role Pengguna" required>
                   <option selected>Pilih Role Pengguna</option>
                   <option value="admin">Admin</option>
                   <option value="staff">Staff</option>
                   </select>
               </div>
               <div class="col-md-6">
-                <label>Password</label>
-                <input type="password" id="password" name="password" class="form-control">
+              <label>Password</label>
+                <div class="input-group">
+                <input type="password" id="password" name="password" class="form-control" required>
+                <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></button>
+                </div>
               </div>
               <div class="col-md-6">
                 <label>Email</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com">
+                <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
               </div>
               <div class="col-md-6">
                 <label>Telp</label>
-                <input type="text" id="phone" name="phone" class="form-control">
+                <input type="text" id="phone" name="phone" class="form-control" required>
               </div>
               <div class="col-12">
                 <label>Alamat lengkap</label>
-                <textarea type="text" id="alamat" name="alamat" class="form-control"></textarea>
+                <textarea type="text" id="alamat" name="alamat" class="form-control" required></textarea>
               </div>
               <div class="col-12">
                 <label>Unggah foto</label>
@@ -75,3 +84,6 @@
 </body>
 
 </html>
+<?php else :
+    header('Location: login.php');
+endif;?>
